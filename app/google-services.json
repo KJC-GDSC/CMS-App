@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1094845932081",
+    "firebase_url": "https://comansys-d5b37-default-rtdb.firebaseio.com",
+    "project_id": "comansys-d5b37",
+    "storage_bucket": "comansys-d5b37.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1094845932081:android:d86f3872df24a8136deb10",
+        "android_client_info": {
+          "package_name": "com.kjc.cms"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1094845932081-qd5b6csc91r0kl1e0fbfogirkqt5v5v4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kjc.cms",
+            "certificate_hash": "a6ab3abb219b48b4faec8a92db2e0874c50126f1"
+          }
+        },
+        {
+          "client_id": "1094845932081-2ubg9fu8b6svqjavufli5p26vu9f7mpj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAhMo3Dx7GY6Aep6lrVadSPspN0i5zlzdo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1094845932081-2ubg9fu8b6svqjavufli5p26vu9f7mpj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.fragments.RequestAccessFragment">
+
+    <ImageView
+        android:id="@+id/backButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/back" />
+
+    <ImageView
+        android:id="@+id/notice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/notice" />
+
+    <TextView
+        android:id="@+id/noticeHead"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ohh...Snap!"
+        android:textColor="@color/black"
+        android:textSize="35sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/notice"
+        app:layout_constraintStart_toStartOf="@+id/notice"
+        app:layout_constraintTop_toBottomOf="@+id/notice" />
+
+    <TextView
+        android:id="@+id/noticeDescriptionStart"
+        android:layout_width="411dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
+        android:text="The email address"
+        android:textAlignment="center"
+        android:textColor="#787878"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/noticeHead"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="@+id/noticeHead"
+        app:layout_constraintTop_toBottomOf="@+id/noticeHead" />
+
+    <TextView
+        android:id="@+id/noticeDescriptionemail"
+        android:layout_width="411dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="24dp"
+        android:text="rohandiwan1824@gmail.com"
+        android:textAlignment="center"
+        android:textColor="#3D76E6"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/noticeHead"
+        app:layout_constraintHorizontal_bias="0.50"
+        app:layout_constraintStart_toStartOf="@+id/noticeHead"
+        app:layout_constraintTop_toBottomOf="@+id/noticeDescriptionStart" />
+
+    <TextView
+        android:id="@+id/noticeDescriptionEnd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="24dp"
+        android:maxWidth="380dp"
+        android:text="is not registered / authorised for using this application. Please try again with a valid authorised account."
+        android:textAlignment="center"
+        android:textColor="#787878"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/noticeHead"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/noticeHead"
+        app:layout_constraintTop_toBottomOf="@+id/noticeDescriptionemail" />
+
+    <TextView
+        android:id="@+id/requestAccess"
+        android:layout_width="wrap_content"
+        android:background="@drawable/rounded_corner_button"
+        android:backgroundTint="#FFC235"
+        android:layout_height="wrap_content"
+        android:padding="10sp"
+        android:textColor="@color/black"
+        android:text="Request Access"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/noticeDescriptionEnd"
+        app:layout_constraintStart_toStartOf="@+id/noticeDescriptionEnd"
+        app:layout_constraintTop_toBottomOf="@+id/noticeDescriptionEnd" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
