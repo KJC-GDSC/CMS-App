@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">CMS</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="prompt_email">Email</string>
+    <string name="default_web_client_id" translatable="false">1094845932081-2ubg9fu8b6svqjavufli5p26vu9f7mpj.apps.googleusercontent.com</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="welcome_text">Welcome to Component Management System</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="component_management_system">Component Management System</string>
+    <string name="welcome_to">Welcome to</string>
+    <string name="google_signup_in">Google Signup/in</string>
+</resources>
