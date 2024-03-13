@@ -15,5 +15,14 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="component_management_system">Component Management System</string>
     <string name="welcome_to">Welcome to</string>
-    <string name="google_signup_in">Google Signup/in</string>
+    <string name="sign_in_with_google">Google Signup/in</string>
+    <string name="home">Home</string>
+    <string name="cart">Cart</string>
+    <string name="history">History</string>
+    <string name="about">About</string>
+    <string name="logout">Logout</string>
+    <string name="name">Name</string>
+    <string name="_21bcac55_kristujayanti_com">21bcac55@kristujayanti.com</string>
+    <string name="open_nav">Open Nav Bar</string>
+    <string name="close_nav">Close Nav Bae</string>
 </resources>

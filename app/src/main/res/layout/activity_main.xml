@@ -34,7 +34,7 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentContainerView"
-        android:name="com.kjc.cms.ui.fragments.SplashScreenFragment"
+        android:name="com.kjc.cms.ui.fragments.once.SplashScreenFragment"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="@+id/imageView"

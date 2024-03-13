@@ -1,4 +1,4 @@
-package com.kjc.cms.ui.fragments
+package com.kjc.cms.ui.fragments.once
 
 import android.os.Bundle
 import android.view.LayoutInflater

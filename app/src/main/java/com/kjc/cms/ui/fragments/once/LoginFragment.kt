@@ -1,9 +1,8 @@
-package com.kjc.cms.ui.fragments
+package com.kjc.cms.ui.fragments.once
 
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,6 +18,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.kjc.cms.R
 import com.kjc.cms.databinding.FragmentLoginBinding
+import com.kjc.cms.ui.HomeActivity
 
 class LoginFragment : Fragment() {
     private lateinit var binding : FragmentLoginBinding
@@ -48,24 +48,18 @@ class LoginFragment : Fragment() {
             .requestEmail().build()
         gsign = GoogleSignIn.getClient(requireActivity(), gso)
 
-        binding.kjcLogo.setOnClickListener{
-            Log.d("hello", "chhala kya")
-        }
         // on click listener to the login button
         binding.googleLogin.setOnClickListener {
-            Toast.makeText(context, gsign.toString(), Toast.LENGTH_SHORT).show()
             signInToGoogle()
         }
     }
 
     private fun signInToGoogle(){
         val signIntent = gsign.signInIntent
-        Toast.makeText(context, "workadlfiajsd", Toast.LENGTH_SHORT).show()
         launcher.launch(signIntent)
     }
     private val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
         result ->
-        Toast.makeText(context, "works", Toast.LENGTH_SHORT).show()
             if (result.resultCode == Activity.RESULT_OK) {
                 val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
                 handleResults(task)
@@ -73,11 +67,10 @@ class LoginFragment : Fragment() {
     }
 
     private fun handleResults(task: Task<GoogleSignInAccount>) {
-        if(task.isSuccessful){
+        if(task.isSuccessful) {
             val account: GoogleSignInAccount? = task.result
-            if(account!= null){
+            if(account!= null) {
                 updateUI(account, account.email.toString().endsWith("@kristujayanti.com"))
-//                updateUI(account)
             }
         } else {
             Toast.makeText(requireActivity(), task.exception.toString(), Toast.LENGTH_SHORT).show()
@@ -88,10 +81,17 @@ class LoginFragment : Fragment() {
         val cred = GoogleAuthProvider.getCredential(account.idToken, null)
         auth.signInWithCredential(cred).addOnCompleteListener {
             if (it.isSuccessful){
-                val intent : Intent = Intent(requireActivity(), RequestAccessFragment::class.java)
-                startActivity(intent)
+                if (access){
+                    val intent = Intent(activity, HomeActivity::class.java)
+                    startActivity(intent)
+                } else {
+                    val fragmentManager = activity?.supportFragmentManager
+                    val fragmentTransaction = fragmentManager?.beginTransaction()
+                    fragmentTransaction?.replace(R.id.fragmentContainerView, RequestAccessFragment())
+                    fragmentTransaction?.commit()
+                }
             } else {
-                Toast.makeText(requireActivity(), it.exception.toString(), Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, it.exception.toString(), Toast.LENGTH_SHORT).show()
             }
         }
     }

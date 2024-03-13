@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragments.SplashScreenFragment">
+    tools:context=".ui.fragments.once.SplashScreenFragment">
 
     <ImageView
         android:id="@+id/kjcLogo"
@@ -44,13 +44,23 @@
         app:layout_constraintStart_toStartOf="@+id/welcome1"
         app:layout_constraintTop_toBottomOf="@+id/welcome1" />
 
-    <ImageView
+    <Button
         android:id="@+id/googleLogin"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:src="@drawable/google_login"
+        android:backgroundTint="@color/googleColor"
+        android:drawableStart="@drawable/ic_google"
+        android:fontFamily="@font/roboto_regular"
+        android:foregroundTint="@color/white"
+        android:padding="12sp"
+        android:paddingStart="15sp"
+        android:text="@string/sign_in_with_google"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="@+id/welcome2"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/welcome2"
         app:layout_constraintTop_toBottomOf="@+id/welcome2" />
 

@@ -1,4 +1,4 @@
-package com.kjc.cms.ui.fragments
+package com.kjc.cms.ui.fragments.once
 
 import android.annotation.SuppressLint
 import android.os.Bundle
