@@ -18,7 +18,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.kjc.cms.R
 import com.kjc.cms.databinding.FragmentLoginBinding
-import com.kjc.cms.ui.HomeActivity
+import com.kjc.cms.ui.ContainerActivity
 
 class LoginFragment : Fragment() {
     private lateinit var binding : FragmentLoginBinding
@@ -82,7 +82,7 @@ class LoginFragment : Fragment() {
         auth.signInWithCredential(cred).addOnCompleteListener {
             if (it.isSuccessful){
                 if (access){
-                    val intent = Intent(activity, HomeActivity::class.java)
+                    val intent = Intent(activity, ContainerActivity::class.java)
                     startActivity(intent)
                 } else {
                     val fragmentManager = activity?.supportFragmentManager

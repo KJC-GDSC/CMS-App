@@ -13,19 +13,10 @@
         android:theme="@style/Theme.CMS"
         tools:targetApi="31">
         <activity
-            android:name=".ui.ConfirmationActivity"
-            android:exported="false" />
-        <activity
             android:name=".ui.ComponentActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.AboutActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.HistoryActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.HomeActivity"
+            android:name=".ui.ContainerActivity"
             android:exported="false" />
 
         <activity

@@ -5,8 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.kjc.cms.R
-import com.kjc.cms.databinding.ActivityHomeBinding
 import com.kjc.cms.databinding.FragmentAboutBinding
 
 class AboutFragment : Fragment() {

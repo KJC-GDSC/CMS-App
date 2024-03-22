@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         Thread.sleep(1500)
         //if user is already logged in then opens the home page
         if (GoogleSignIn.getLastSignedInAccount(this)!=null){
-            startActivity(Intent(this, HomeActivity::class.java))
+            startActivity(Intent(this, ContainerActivity::class.java))
             finish()
         } else {
             // else opens login page
