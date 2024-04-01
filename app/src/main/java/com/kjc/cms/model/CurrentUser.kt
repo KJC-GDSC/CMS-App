@@ -1,4 +1,6 @@
 package com.kjc.cms.model
 
-class CurrentUser {
-}
+data class CurrentUser (
+    val Name : String = "",
+    val  Department : String = ""
+)

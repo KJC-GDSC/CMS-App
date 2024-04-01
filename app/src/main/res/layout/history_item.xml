@@ -3,11 +3,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:layout_margin="12dp"
     >
 
-    <com.google.android.material.imageview.ShapeableImageView
+    <ImageView
         android:id="@+id/history_item_image"
         android:layout_width="100dp"
         android:layout_height="100dp"
@@ -15,8 +15,7 @@
         android:scaleType="centerCrop"
         android:layout_margin="8dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:shapeAppearanceOverlay="@style/RoundCorner"/>
+        app:layout_constraintTop_toTopOf="parent"/>
 
 
     <TextView
@@ -40,24 +39,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="32dp"
-        android:text="Quantity ordered:"
+        android:text="@string/quantity_ordered"
         android:textColor="@color/black"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/history_item_image"
         app:layout_constraintTop_toBottomOf="@+id/history_item_name" />
-    <TextView
-        android:id="@+id/history_item_ordered_on"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="32dp"
-        android:text="Ordered On:"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/history_item_image"
-        app:layout_constraintTop_toBottomOf="@+id/history_item_quantity" />
 
     <View
         android:layout_width="0dp"

@@ -12,6 +12,7 @@ import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.QuerySnapshot
+import com.google.firebase.firestore.toObject
 import com.kjc.cms.adapter.HistoryAdapter
 import com.kjc.cms.databinding.FragmentHistoryBinding
 import com.kjc.cms.model.BookingHistory
@@ -22,11 +23,7 @@ class HistoryFragment : Fragment() {
     private lateinit var historyItemList: ArrayList<BookingHistory>
     private lateinit var historyAdapter: HistoryAdapter
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentHistoryBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -34,29 +31,26 @@ class HistoryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.historyRecycler.layoutManager = LinearLayoutManager(context)
-        binding.historyRecycler.hasFixedSize()
-
+        historyAdapter = HistoryAdapter()
+        binding.historyRecycler.adapter = historyAdapter
         historyItemList = arrayListOf()
         getHistoryOfUser()
     }
 
     private fun getHistoryOfUser() {
         collectionReference = FirebaseFirestore.getInstance().collection("History")
-        collectionReference.addSnapshotListener(object : EventListener<QuerySnapshot>{
-            override fun onEvent(value: QuerySnapshot?, error: FirebaseFirestoreException?) {
-                if (error != null)
-                {
-                    Log.e("FireStore error", error.message.toString())
-                    return
-                }
+        collectionReference.get().addOnSuccessListener { result ->
+            for ( doc in result ){
                 // TODO: Add user specific History
-                for (historyItemSnapshot in value?.documentChanges!!){
-                    val historyItem = historyItemSnapshot.document.toObject(BookingHistory::class.java)
-                    historyItemList.add(historyItem)
+                val historyItems = doc.get("Component") as ArrayList<Map<String, String>>
+                for(item in historyItems){
+                    val i = BookingHistory(item["Id"], item["Image"], item["Name"], item["Quantity"])
+                    historyItemList.add(i)
                 }
-                historyAdapter.notifyDataSetChanged()
-                binding.historyRecycler.adapter = HistoryAdapter(historyItemList)
             }
-        })
+            historyAdapter.saveData(historyItemList)
+        }.addOnFailureListener { exception ->
+            Log.d("FireStore Error", exception.toString())
+        }
     }
 }

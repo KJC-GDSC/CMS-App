@@ -3,6 +3,7 @@ package com.kjc.cms.ui
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -16,6 +17,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.firestore.FirebaseFirestore
 import com.kjc.cms.R
 import com.kjc.cms.databinding.ActivityContainerBinding
 import com.kjc.cms.ui.fragments.home.AboutFragment
@@ -25,8 +27,13 @@ import com.kjc.cms.ui.fragments.home.HomeFragment
 
 class ContainerActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     private lateinit var binding: ActivityContainerBinding
+    private lateinit var navigationView: NavigationView
+    private lateinit var firestore: FirebaseFirestore
     lateinit var mGoogleSignInClient: GoogleSignInClient
     private lateinit var acct: GoogleSignInAccount
+
+    //TODO("complete calling of data here and save data in local storage")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityContainerBinding.inflate(layoutInflater)
@@ -39,9 +46,12 @@ class ContainerActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
             .build()
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
         acct = GoogleSignIn.getLastSignedInAccount(this)!!
-        findViewById<TextView>(R.id.userName).text = acct.givenName
-        findViewById<TextView>(R.id.userEmail).text = acct.email
-        Glide.with(this).load(acct.photoUrl).into(findViewById<ImageView>(R.id.userImage))
+        firestore = FirebaseFirestore.getInstance()
+        navigationView = findViewById<NavigationView>(R.id.nav_view);
+        val headerView: View = navigationView.getHeaderView(0)
+        headerView.findViewById<TextView>(R.id.userName).text = acct.displayName.toString()
+        headerView.findViewById<TextView>(R.id.userEmail).text = acct.email.toString()
+        Glide.with(this).load(acct.photoUrl.toString()).into(headerView.findViewById<ImageView>(R.id.userImage))
 
         binding.navView.setNavigationItemSelectedListener(this)
 
@@ -77,6 +87,7 @@ class ContainerActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         return true
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         super.onBackPressed()
         if (binding.drawer.isDrawerOpen(GravityCompat.START)){
@@ -85,6 +96,7 @@ class ContainerActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
             onBackPressedDispatcher.onBackPressed()
         }
     }
+
     private fun fragMan( navView: NavigationView,fragment: Fragment, menuId: Int) {
         val fragmentManager = supportFragmentManager
         fragmentManager.beginTransaction()

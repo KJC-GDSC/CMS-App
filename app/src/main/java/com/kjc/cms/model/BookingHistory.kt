@@ -3,8 +3,8 @@ package com.kjc.cms.model
 import java.util.Date
 
 data class BookingHistory (
-    val name : String,
-    val Component : Map<String,String>,
-    val EventName : String,
-    val BookedOn: Date
+    val Id : String?="",
+    val Image : String?="",
+    val Name : String?="",
+    val Quantity : String?="",
 )
