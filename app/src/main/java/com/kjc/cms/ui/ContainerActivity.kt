@@ -10,7 +10,6 @@ import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
-import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -24,6 +23,7 @@ import com.kjc.cms.ui.fragments.home.AboutFragment
 import com.kjc.cms.ui.fragments.home.CartFragment
 import com.kjc.cms.ui.fragments.home.HistoryFragment
 import com.kjc.cms.ui.fragments.home.HomeFragment
+import com.kjc.cms.utils.Utils
 
 class ContainerActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     private lateinit var binding: ActivityContainerBinding
@@ -60,20 +60,20 @@ class ContainerActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         binding.drawer.addDrawerListener(toggle)
         toggle.syncState()
         if (savedInstanceState == null){
-            fragMan(binding.navView, HomeFragment(), R.id.nav_home)
+            Utils.fragMan(supportFragmentManager, HomeFragment(), binding.navView, R.id.nav_home)
         }
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.nav_home ->
-                fragMan(binding.navView, HomeFragment(), R.id.nav_home)
+                Utils.fragMan(supportFragmentManager, HomeFragment(), binding.navView, R.id.nav_home)
             R.id.nav_cart ->
-                fragMan(binding.navView, CartFragment(), R.id.nav_cart)
+                Utils.fragMan(supportFragmentManager, CartFragment(), binding.navView, R.id.nav_cart)
             R.id.nav_about ->
-                fragMan(binding.navView, AboutFragment(), R.id.nav_about)
+                Utils.fragMan(supportFragmentManager, AboutFragment(), binding.navView, R.id.nav_about)
             R.id.nav_history->
-                fragMan(binding.navView, HistoryFragment(), R.id.nav_history)
+                Utils.fragMan(supportFragmentManager, HistoryFragment(), binding.navView, R.id.nav_history)
             R.id.nav_logout -> {
                 mGoogleSignInClient.signOut().addOnCompleteListener {
                     val intent= Intent(this, MainActivity::class.java)
@@ -95,13 +95,5 @@ class ContainerActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         } else {
             onBackPressedDispatcher.onBackPressed()
         }
-    }
-
-    private fun fragMan( navView: NavigationView,fragment: Fragment, menuId: Int) {
-        val fragmentManager = supportFragmentManager
-        fragmentManager.beginTransaction()
-            .replace(R.id.fragmentContainerView, fragment)
-            .commit()
-        navView.setCheckedItem(menuId)
     }
 }

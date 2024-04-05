@@ -1,0 +1,28 @@
+{
+  "about": {
+    "version": "v1.0",
+    "description": "CMS: Component Management System is a full stack software which helps in the booking of several components for any special event.\nIt has both a mobile application and an admin Dashboard ",
+    "details": [
+      {
+        "title": "Tech Stack",
+        "tech": ["Kotlin", "Android Studio", "Svelte", "Firebase"],
+        "contributor": ["GDSC"]
+      },
+      {
+        "title": "App Development",
+        "tech": ["Kotlin", "XML", "Firebase"],
+        "contributor": ["Rohan Agarwal"]
+      },
+      {
+        "title": "Design",
+        "tech": ["Figma"],
+        "contributor": ["Aditya Kalbandhe", "Manush G R", "Shambhavi Yadav", "Arman Khan", "Rishu"]
+      },
+      {
+        "title": "Web Development",
+        "tech": ["Svelte", "HTML", "CSS", "JS", "Firebase"],
+        "contributor": ["Agnik Paul", "Rishabh Bhatt", "Joe Sanjo Cijo", "Harsh Pratap Singh"]
+      }
+    ]
+  }
+}

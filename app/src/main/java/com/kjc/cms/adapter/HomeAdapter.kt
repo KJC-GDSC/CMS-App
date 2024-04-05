@@ -42,10 +42,14 @@ class HomeAdapter() : RecyclerView.Adapter<HomeAdapter.HomeViewHolder>() {
         val homeItem = differ.currentList[position]
         holder.componentName.text = homeItem.Name
         Glide.with(holder.itemView.context).load(homeItem.Image).into(holder.componentImage)
+        holder.itemView.setOnClickListener{
+            onItemClick?.invoke(homeItem)
+        }
     }
 
     override fun getItemCount(): Int {
         return differ.currentList.size
     }
 
+    var onItemClick :((Component) -> Unit)? = null
 }

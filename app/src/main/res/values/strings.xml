@@ -26,4 +26,5 @@
     <string name="open_nav">Open Nav Bar</string>
     <string name="close_nav">Close Nav Bae</string>
     <string name="quantity_ordered">Quantity ordered:</string>
+    <string name="version">Version: v1.0</string>
 </resources>

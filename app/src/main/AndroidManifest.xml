@@ -13,8 +13,9 @@
         android:theme="@style/Base.Theme.CMS"
         tools:targetApi="31">
         <activity
-            android:name=".ui.ComponentActivity"
-            android:exported="false" />
+            android:name=".ui.SecondaryActivity"
+            android:exported="false"
+            android:parentActivityName=".ui.ContainerActivity"/>
         <activity
             android:name=".ui.ContainerActivity"
             android:exported="false" />
