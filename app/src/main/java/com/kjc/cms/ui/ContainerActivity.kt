@@ -1,7 +1,10 @@
 package com.kjc.cms.ui
 
 import android.content.Intent
+import android.content.SharedPreferences
+import android.content.SharedPreferences.Editor
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
@@ -29,8 +32,11 @@ class ContainerActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
     private lateinit var binding: ActivityContainerBinding
     private lateinit var navigationView: NavigationView
     private lateinit var firestore: FirebaseFirestore
-    lateinit var mGoogleSignInClient: GoogleSignInClient
+    private lateinit var googleSignInClient: GoogleSignInClient
     private lateinit var acct: GoogleSignInAccount
+    private lateinit var sp: SharedPreferences
+    private lateinit var editor: Editor
+    private lateinit var cartItems: MutableSet<String>
 
     //TODO("complete calling of data here and save data in local storage")
 
@@ -44,43 +50,49 @@ class ContainerActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
             .build()
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
+        googleSignInClient = GoogleSignIn.getClient(this, gso)
         acct = GoogleSignIn.getLastSignedInAccount(this)!!
         firestore = FirebaseFirestore.getInstance()
+        sp = getSharedPreferences("Cart", MODE_PRIVATE)
+        editor = sp.edit()
+        cartItems = sp.getStringSet("items", mutableSetOf())!!
+        // fetch user credential information
+
         navigationView = findViewById<NavigationView>(R.id.nav_view);
         val headerView: View = navigationView.getHeaderView(0)
         headerView.findViewById<TextView>(R.id.userName).text = acct.displayName.toString()
         headerView.findViewById<TextView>(R.id.userEmail).text = acct.email.toString()
         Glide.with(this).load(acct.photoUrl.toString()).into(headerView.findViewById<ImageView>(R.id.userImage))
-
         binding.navView.setNavigationItemSelectedListener(this)
-
         val toggle = ActionBarDrawerToggle(this, binding.drawer, binding.toolbar, R.string.open_nav, R.string.close_nav)
+        // set up the side bar items
 
         binding.drawer.addDrawerListener(toggle)
         toggle.syncState()
         if (savedInstanceState == null){
-            Utils.fragMan(supportFragmentManager, HomeFragment(), binding.navView, R.id.nav_home)
+            //opens home page by default
+            Utils.fragMan(supportFragmentManager, HomeFragment(cartItems), binding.navView, R.id.nav_home)
         }
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        // handle item selection and change fragments based ont the item selected
         when(item.itemId){
             R.id.nav_home ->
-                Utils.fragMan(supportFragmentManager, HomeFragment(), binding.navView, R.id.nav_home)
+                Utils.fragMan(supportFragmentManager, HomeFragment(cartItems), binding.navView, R.id.nav_home)
             R.id.nav_cart ->
-                Utils.fragMan(supportFragmentManager, CartFragment(), binding.navView, R.id.nav_cart)
+                Utils.fragMan(supportFragmentManager, CartFragment(sp, editor), binding.navView, R.id.nav_cart)
             R.id.nav_about ->
                 Utils.fragMan(supportFragmentManager, AboutFragment(), binding.navView, R.id.nav_about)
             R.id.nav_history->
                 Utils.fragMan(supportFragmentManager, HistoryFragment(), binding.navView, R.id.nav_history)
             R.id.nav_logout -> {
-                mGoogleSignInClient.signOut().addOnCompleteListener {
+                googleSignInClient.signOut().addOnCompleteListener {
                     val intent= Intent(this, MainActivity::class.java)
                     startActivity(intent)
+                    Toast.makeText(this, acct.displayName.toString()+" Logged Out", Toast.LENGTH_SHORT).show()
                     finish()
                 }
-                Toast.makeText(this, "Logout", Toast.LENGTH_SHORT).show()
             }
         }
         binding.drawer.closeDrawer(GravityCompat.START)
@@ -92,8 +104,10 @@ class ContainerActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         super.onBackPressed()
         if (binding.drawer.isDrawerOpen(GravityCompat.START)){
             binding.drawer.closeDrawer(GravityCompat.START)
+            //if the sidebar is open should close the sidebar
         } else {
             onBackPressedDispatcher.onBackPressed()
+            //else use the android default
         }
     }
 }

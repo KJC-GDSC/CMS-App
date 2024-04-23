@@ -28,11 +28,7 @@ class LoginFragment : Fragment() {
     // check access allowed or not
     private var accessable = true
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentLoginBinding.inflate(inflater,container, false)
         return binding.root
     }
@@ -55,13 +51,16 @@ class LoginFragment : Fragment() {
     }
 
     private fun signInToGoogle(){
+        //Launch sign in intent to begin sign in process
         val signIntent = gsign.signInIntent
         launcher.launch(signIntent)
     }
+
     private val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
         result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
+                //Take the result after account is selected
                 handleResults(task)
             }
     }
@@ -69,8 +68,11 @@ class LoginFragment : Fragment() {
     private fun handleResults(task: Task<GoogleSignInAccount>) {
         if(task.isSuccessful) {
             val account: GoogleSignInAccount? = task.result
+            // If the data is passed properly and get a successful result
             if(account!= null) {
+                // TODO: Add access check from database
                 updateUI(account, account.email.toString().endsWith("@kristujayanti.com"))
+                // Start the login process
             }
         } else {
             Toast.makeText(requireActivity(), task.exception.toString(), Toast.LENGTH_SHORT).show()
@@ -82,9 +84,11 @@ class LoginFragment : Fragment() {
         auth.signInWithCredential(cred).addOnCompleteListener {
             if (it.isSuccessful){
                 if (access){
+                    //start the app with the credentials
                     val intent = Intent(activity, ContainerActivity::class.java)
                     startActivity(intent)
                 } else {
+//                    if access is not given
                     val fragmentManager = activity?.supportFragmentManager
                     val fragmentTransaction = fragmentManager?.beginTransaction()
                     fragmentTransaction?.replace(R.id.fragmentContainerView, RequestAccessFragment())

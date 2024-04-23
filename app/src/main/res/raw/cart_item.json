@@ -1,0 +1,21 @@
+{
+  "Event Name": "Event Name",
+  "Booking Date": "12-02-22",
+  "Return Date": "12-03-22",
+  "booked by": "Rohan Agarwal",
+  "department": "Computer Science",
+  "items": [
+    {
+      "name": "Item Name",
+      "id": "Item Id",
+      "quantity": "Item Quantity",
+      "image": "Image URL"
+    },
+    {
+      "name": "Item Name",
+      "id": "Item Id",
+      "quantity": "Item Quantity",
+      "image": "Image URL"
+    }
+  ]
+}

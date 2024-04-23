@@ -25,6 +25,7 @@ class SplashScreenFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // TODO: Add Animation
 //        window.statusBarColor.toColor(getColor(R.color.black))
 
         // need to work on the import

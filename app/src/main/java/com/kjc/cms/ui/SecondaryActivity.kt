@@ -11,12 +11,16 @@ import com.kjc.cms.utils.Utils
 
 class SecondaryActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySecondaryBinding
-
     override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
+        super.onCreate(savedInstanceState)
 
-    binding = ActivitySecondaryBinding.inflate(layoutInflater)
-    setContentView(binding.root)
+        binding = ActivitySecondaryBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        val sp = getSharedPreferences("Cart", MODE_PRIVATE)
+        val editor = sp.edit()
+        val cartItems = sp.getStringSet("items", mutableSetOf())
+
         val data = intent.getStringExtra("Data")
         val frag = intent.getStringExtra("fragName")
         val comp = Gson().fromJson(data, Component::class.java)
@@ -24,9 +28,9 @@ class SecondaryActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         if (frag == "EachComponent") {
-            Utils.fragMan(supportFragmentManager, EachComponentFragment(comp))
+            Utils.fragMan(supportFragmentManager, EachComponentFragment(comp, cartItems, editor))
         } else {
-            Utils.fragMan(supportFragmentManager, ConfirmBookingFragment())
+            Utils.fragMan(supportFragmentManager, ConfirmBookingFragment(cartItems, editor, sp))
         }
     }
 }

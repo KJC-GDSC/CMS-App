@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.kjc.cms.R
 import com.kjc.cms.model.CartComponent
+import com.kjc.cms.model.Component
 
 class CartAdapter() : RecyclerView.Adapter<CartAdapter.CartViewHolder>() {
     private val differCallBack = object: DiffUtil.ItemCallback<CartComponent>() {
@@ -33,6 +34,8 @@ class CartAdapter() : RecyclerView.Adapter<CartAdapter.CartViewHolder>() {
         val componentName: TextView = itemVew.findViewById(R.id.cart_item_name)
         val componentQuantity: TextView = itemVew.findViewById(R.id.cart_item_quantity)
         val componentImage: ImageView = itemVew.findViewById(R.id.cart_item_image)
+        val increment: ImageView = itemVew.findViewById(R.id.cart_increment)
+        val decrement: ImageView = itemVew.findViewById(R.id.cart_decrement)
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CartAdapter.CartViewHolder {
         return CartAdapter.CartViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.cart_item, parent, false))
@@ -41,7 +44,14 @@ class CartAdapter() : RecyclerView.Adapter<CartAdapter.CartViewHolder>() {
     override fun onBindViewHolder(holder: CartAdapter.CartViewHolder, position: Int) {
         val cartItem = differ.currentList[position]
         holder.componentQuantity.text = cartItem.quantity.toString()
+        holder.componentName.text = cartItem.name
         Glide.with(holder.itemView.context).load(cartItem.image).into(holder.componentImage)
+        holder.decrement.setOnClickListener{
+            holder.componentQuantity.text = (--cartItem.quantity).toString()
+        }
+        holder.increment.setOnClickListener{
+            holder.componentQuantity.text = (++cartItem.quantity).toString()
+        }
     }
 
     override fun getItemCount(): Int {

@@ -11,10 +11,23 @@
         android:id="@+id/cartRecycler"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/continue_booking"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/cart_item" />
+        tools:listitem="@layout/cart_item"
+        android:layout_marginBottom="20dp"/>
+
+    <Button
+        android:id="@+id/continue_booking"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Continue Book"
+        android:background="@drawable/rounded_corner_button"
+        android:layout_margin="20dp"
+        android:paddingHorizontal="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

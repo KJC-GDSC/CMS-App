@@ -26,7 +26,7 @@ class HomeAdapter() : RecyclerView.Adapter<HomeAdapter.HomeViewHolder>() {
 
     private val differ = AsyncListDiffer(this,differCallBack)
 
-    fun saveData( dataResponse: List<Component>){
+    fun saveData(dataResponse: List<Component>){
         differ.submitList(dataResponse)
     }
 
@@ -34,6 +34,7 @@ class HomeAdapter() : RecyclerView.Adapter<HomeAdapter.HomeViewHolder>() {
         val componentName : TextView = itemView.findViewById(R.id.grid_item_name)
         val componentImage : ImageView = itemView.findViewById(R.id.grid_item_image)
     }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeAdapter.HomeViewHolder {
         return HomeViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.home_grid_item, parent, false))
     }
