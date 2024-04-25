@@ -27,43 +27,15 @@ class Utils {
                     .replace(R.id.fragmentContainerView, fragment)
                     .commit()
                 navView.setCheckedItem(menuId)
+            } else if(menuId == 1) {
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragmentContainerMainView, fragment)
+                    .commit()
             } else {
                 supportFragmentManager.beginTransaction()
                     .replace(R.id.fragmentSecondaryView, fragment)
                     .commit()
             }
-        }
-
-//        private fun openDialogBox(context:Context, content: Int, confirmButton: Int, text:String? = null) {
-//            val dialog = Dialog(context)
-//            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-//            dialog.setCancelable(false)
-//            dialog.setContentView(content)
-//            dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-//            val confBtn: TextView = dialog.findViewById(confirmButton)
-//            if (text!=null){
-//                val dialogText: TextView = dialog.findViewById(R.id.dialogText)
-//                dialogText.text = text
-//            }
-//            confBtn.setOnClickListener{
-//                dialog.dismiss()
-//            }
-//        }
-//
-//        fun convertImageToBase64(image: Bitmap): String {
-//            val byteArrayOutputStream = ByteArrayOutputStream()
-//            image.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
-//            val byteArray = byteArrayOutputStream.toByteArray()
-//            return Base64.encodeToString(byteArray, Base64.DEFAULT)
-//        }
-//
-//        fun getBitmapFromURL(src: String): Bitmap {
-//            val url = URL(src)
-//            return BitmapFactory.decodeStream(url.openStream())
-//        }
-
-        fun getCartItems(){
-
         }
     }
 }

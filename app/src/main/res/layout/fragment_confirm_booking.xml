@@ -127,7 +127,7 @@
         android:layout_marginBottom="30dp"
         android:background="@drawable/rounded_corner_button"
         android:padding="16dp"
-        android:text="Download PDF"
+        android:text="Confirm Booking"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

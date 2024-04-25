@@ -34,7 +34,7 @@
         app:layout_constraintGuide_percent="0.95" />
 
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragmentContainerView"
+        android:id="@+id/fragmentContainerMainView"
         android:name="com.kjc.cms.ui.fragments.once.SplashScreenFragment"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
