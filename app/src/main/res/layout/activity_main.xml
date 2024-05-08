@@ -35,11 +35,12 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentContainerMainView"
-        android:name="com.kjc.cms.ui.fragments.once.SplashScreenFragment"
+        android:name="com.kjc.cms.ui.fragments.once.LoginFragment"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="@+id/imageView"
         app:layout_constraintEnd_toStartOf="@+id/gdlineMainRight"
         app:layout_constraintStart_toStartOf="@+id/gdlineMainLeft"
-        app:layout_constraintTop_toTopOf="@+id/imageView" />
+        app:layout_constraintTop_toTopOf="@+id/imageView"
+        tools:layout="@layout/fragment_login" />
 </androidx.constraintlayout.widget.ConstraintLayout>
