@@ -18,6 +18,7 @@ class SecondaryActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val sp = getSharedPreferences("Cart", MODE_PRIVATE)
+        val userSp = getSharedPreferences("User", MODE_PRIVATE)
         val editor = sp.edit()
         val cartItems = sp.getStringSet("items", mutableSetOf())
 
@@ -30,7 +31,7 @@ class SecondaryActivity : AppCompatActivity() {
         if (frag == "EachComponent") {
             Utils.fragMan(supportFragmentManager, EachComponentFragment(comp, cartItems, editor))
         } else {
-            Utils.fragMan(supportFragmentManager, ConfirmBookingFragment(cartItems, editor, sp))
+            Utils.fragMan(supportFragmentManager, ConfirmBookingFragment(cartItems, editor, sp, userSp))
         }
     }
 }

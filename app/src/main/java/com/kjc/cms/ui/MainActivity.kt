@@ -17,17 +17,22 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        //check if the user is stored in the shared Preference
+        val usp = getSharedPreferences("User", MODE_PRIVATE)
+        val editor = usp.edit()
+
         //opens splashscreen
         fragMan(supportFragmentManager, SplashScreenFragment(), menuId = 1)
         // after 1.5 secs delay
         Thread.sleep(1500)
-        //if user is already logged in then opens the home page
-        if (GoogleSignIn.getLastSignedInAccount(this)!=null){
+
+        if (GoogleSignIn.getLastSignedInAccount(this)!=null && usp.contains("currentUser")){
+            //if user is already logged in then opens the home page
             startActivity(Intent(this, ContainerActivity::class.java))
             finish()
         } else {
             // else opens login page
-            fragMan(supportFragmentManager, LoginFragment(), menuId = 1)
+            fragMan(supportFragmentManager, LoginFragment(editor), menuId = 1)
         }
     }
 }

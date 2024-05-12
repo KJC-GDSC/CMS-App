@@ -2,6 +2,7 @@ package com.kjc.cms.ui.fragments.once
 
 import android.app.Activity
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,17 +17,21 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.gson.Gson
 import com.kjc.cms.R
 import com.kjc.cms.databinding.FragmentLoginBinding
+import com.kjc.cms.model.CurrentUser
 import com.kjc.cms.ui.ContainerActivity
+import com.kjc.cms.utils.Utils.Companion.fragMan
 
-class LoginFragment : Fragment() {
+class LoginFragment(private val editor: SharedPreferences.Editor) : Fragment() {
     private lateinit var binding : FragmentLoginBinding
     // login variables
     private lateinit var auth: FirebaseAuth
     private lateinit var gsign: GoogleSignInClient
+    private lateinit var firestore: FirebaseFirestore
     // check access allowed or not
-    private var accessable = true
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentLoginBinding.inflate(inflater,container, false)
@@ -38,6 +43,7 @@ class LoginFragment : Fragment() {
 
         //get firebase instance
         auth = FirebaseAuth.getInstance()
+        firestore = FirebaseFirestore.getInstance()
         // get google sign in instance
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
@@ -70,12 +76,25 @@ class LoginFragment : Fragment() {
             val account: GoogleSignInAccount? = task.result
             // If the data is passed properly and get a successful result
             if(account!= null) {
-                // TODO: Add access check from database
-                updateUI(account, account.email.toString().endsWith("@kristujayanti.com"))
+                verifyUser(account, task)
                 // Start the login process
             }
         } else {
             Toast.makeText(requireActivity(), task.exception.toString(), Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun verifyUser(account: GoogleSignInAccount, task: Task<GoogleSignInAccount>) {
+        firestore.collection("Users").document(account.email.toString()).get().addOnSuccessListener{ documentSnapshot ->
+            if (task.isSuccessful){
+                val user: CurrentUser = documentSnapshot.toObject(CurrentUser::class.java)!!
+                val gson = Gson()
+                editor.putString("currentUser", gson.toJson(user))
+                editor.apply()
+                updateUI(account, true)
+            } else {
+                updateUI(account, false)
+            }
         }
     }
 
@@ -88,11 +107,8 @@ class LoginFragment : Fragment() {
                     val intent = Intent(activity, ContainerActivity::class.java)
                     startActivity(intent)
                 } else {
-//                    if access is not given
-                    val fragmentManager = activity?.supportFragmentManager
-                    val fragmentTransaction = fragmentManager?.beginTransaction()
-                    fragmentTransaction?.replace(R.id.fragmentContainerView, RequestAccessFragment())
-                    fragmentTransaction?.commit()
+                    //if access is not given
+                    fragMan(requireActivity().supportFragmentManager, RequestAccessFragment(account), menuId = 1)
                 }
             } else {
                 Toast.makeText(context, it.exception.toString(), Toast.LENGTH_SHORT).show()

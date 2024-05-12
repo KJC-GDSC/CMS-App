@@ -5,7 +5,6 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,8 +13,6 @@ import android.view.Window
 import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.firestore.CollectionReference
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.gson.Gson
 import com.kjc.cms.R
 import com.kjc.cms.adapter.HomeAdapter
@@ -23,10 +20,8 @@ import com.kjc.cms.databinding.FragmentHomeBinding
 import com.kjc.cms.model.Component
 import com.kjc.cms.ui.SecondaryActivity
 
-class HomeFragment(private var cartItems: MutableSet<String>? = mutableSetOf()) : Fragment() {
+class HomeFragment(private var homeItemList: ArrayList<Component>, private var cartItems: ArrayList<Component>) : Fragment() {
     private lateinit var binding: FragmentHomeBinding
-    private lateinit var collectionReference: CollectionReference
-    private lateinit var homeItemList: ArrayList<Component>
     private lateinit var homeAdapter: HomeAdapter
     private var homeRecycler : RecyclerView? = null
 
@@ -42,7 +37,7 @@ class HomeFragment(private var cartItems: MutableSet<String>? = mutableSetOf()) 
         binding.homeGridRecycler.adapter = homeAdapter
         homeItemList = arrayListOf()
         homeAdapter.onItemClick = { component ->
-            if (cartItems?.isEmpty() == false) {
+            if (cartItems.contains(component)) {
                 openDialogBox("Item already added to cart")
             } else if (component.AvailableQuantity.toInt() > 0) {
                 //opens component details if it is available
@@ -54,7 +49,7 @@ class HomeFragment(private var cartItems: MutableSet<String>? = mutableSetOf()) 
                 openDialogBox()
             }
         }
-        getAllComponents()
+        homeAdapter.saveData(homeItemList)
     }
 
     private fun openDialogBox(text:String? = null) {
@@ -72,26 +67,5 @@ class HomeFragment(private var cartItems: MutableSet<String>? = mutableSetOf()) 
             dialog.dismiss()
         }
         dialog.show()
-    }
-
-    private fun getAllComponents() {
-        collectionReference = FirebaseFirestore.getInstance().collection("Components")
-        collectionReference.get().addOnSuccessListener { result ->
-            for (doc in result) {
-                val component = Component(
-                    Id = doc.id,
-                    AvailableQuantity= doc.data["AvailableQuantity"].toString(),
-                    Image= doc.data["Image"].toString(),
-                    LastUpdated= doc.data["LastUpdated"].toString(),
-                    Model= doc.data["Model"].toString(),
-                    Name= doc.data["Name"].toString(),
-                    Price= doc.data["Price"].toString(),
-                    Quantity= doc.data["Quantity"].toString())
-                homeItemList.add(component)
-            }
-            homeAdapter.saveData(homeItemList)
-        }.addOnFailureListener { exception ->
-            Log.d("FireStore Error", exception.toString())
-        }
     }
 }

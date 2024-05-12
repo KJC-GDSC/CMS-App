@@ -8,16 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.firestore.CollectionReference
-import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.FirebaseFirestoreException
-import com.google.firebase.firestore.QuerySnapshot
-import com.google.firebase.firestore.toObject
 import com.kjc.cms.adapter.HistoryAdapter
 import com.kjc.cms.databinding.FragmentHistoryBinding
 import com.kjc.cms.model.BookingHistory
 
-class HistoryFragment : Fragment() {
+class HistoryFragment(private val userEmail: String) : Fragment() {
     private lateinit var binding: FragmentHistoryBinding
     private lateinit var collectionReference: CollectionReference
     private lateinit var historyItemList: ArrayList<BookingHistory>
@@ -39,9 +35,8 @@ class HistoryFragment : Fragment() {
 
     private fun getHistoryOfUser() {
         collectionReference = FirebaseFirestore.getInstance().collection("History")
-        collectionReference.get().addOnSuccessListener { result ->
+        collectionReference.whereEqualTo("userName", userEmail).get().addOnSuccessListener { result ->
             for ( doc in result ){
-                // TODO: Add user specific History
                 val historyItems = doc.get("Component") as ArrayList<Map<String, String>>
                 for(item in historyItems){
                     val i = BookingHistory(item["Id"], item["Image"], item["Name"], item["Quantity"])
