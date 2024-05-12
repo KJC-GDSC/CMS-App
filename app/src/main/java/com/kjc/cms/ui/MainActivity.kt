@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         //opens splashscreen
-        fragMan(supportFragmentManager, SplashScreenFragment())
+        fragMan(supportFragmentManager, SplashScreenFragment(), menuId = 1)
         // after 1.5 secs delay
         Thread.sleep(1500)
         //if user is already logged in then opens the home page
@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
             finish()
         } else {
             // else opens login page
-            fragMan(supportFragmentManager, LoginFragment())
+            fragMan(supportFragmentManager, LoginFragment(), menuId = 1)
         }
     }
 }
