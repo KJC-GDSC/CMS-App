@@ -33,7 +33,7 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.95" />
 
-    <androidx.fragment.app.FragmentContainerView
+    <FrameLayout
         android:id="@+id/fragmentContainerMainView"
         android:name="com.kjc.cms.ui.fragments.once.LoginFragment"
         android:layout_width="0dp"
