@@ -34,18 +34,14 @@ import com.kjc.cms.utils.Utils
 class ContainerActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     private lateinit var binding: ActivityContainerBinding
     private lateinit var navigationView: NavigationView
-    private lateinit var firestore: FirebaseFirestore
     private lateinit var googleSignInClient: GoogleSignInClient
     private lateinit var acct: GoogleSignInAccount
-    private lateinit var user: CurrentUser
     private lateinit var sp: SharedPreferences
     private lateinit var usp: SharedPreferences
     private lateinit var editor: Editor
     private lateinit var ueditor: Editor
-    private lateinit var homeItemList : ArrayList<Component>
-    private lateinit var cartItems: ArrayList<Component>
-
-    //TODO("complete calling of data here and save data in local storage")
+    private var homeItemList : ArrayList<Component> = arrayListOf()
+    private var cartItems: ArrayList<Component> = arrayListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,29 +58,12 @@ class ContainerActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         acct = GoogleSignIn.getLastSignedInAccount(this)!!
 
         //firestore connectivity and get list of items
-        firestore = FirebaseFirestore.getInstance()
-        firestore.collection("Components").get().addOnSuccessListener { result ->
-            for (doc in result) {
-                val component = Component(
-                    Id = doc.id,
-                    AvailableQuantity = doc.data["AvailableQuantity"].toString(),
-                    Image = doc.data["Image"].toString(),
-                    LastUpdated = doc.data["LastUpdated"].toString(),
-                    Model = doc.data["Model"].toString(),
-                    Name = doc.data["Name"].toString(),
-                    Price = doc.data["Price"].toString(),
-                    Quantity = doc.data["Quantity"].toString()
-                )
-                homeItemList.add(component)
-            }
-        }.addOnFailureListener { exception ->
-            Log.d("FireStore Error", exception.toString())
-        }
-                // connect to local shared preference
+        Log.d("item list", homeItemList.toString())
+        // connect to local shared preference
         sp = getSharedPreferences("Cart", MODE_PRIVATE)
-                editor = sp.edit()
+        editor = sp.edit()
+        usp = getSharedPreferences("User", MODE_PRIVATE)
         ueditor = usp.edit()
-        user = Gson().fromJson(usp.getString("User", null), CurrentUser::class.java)
         sp.getStringSet("items", mutableSetOf())?.forEach { item ->
             cartItems.add(Gson().fromJson(item, Component::class.java))
         }

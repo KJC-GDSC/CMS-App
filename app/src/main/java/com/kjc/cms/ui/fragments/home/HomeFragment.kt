@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +14,7 @@ import android.view.Window
 import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.gson.Gson
 import com.kjc.cms.R
 import com.kjc.cms.adapter.HomeAdapter
@@ -35,7 +37,6 @@ class HomeFragment(private var homeItemList: ArrayList<Component>, private var c
         homeRecycler?.layoutManager = GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false)
         homeAdapter = HomeAdapter()
         binding.homeGridRecycler.adapter = homeAdapter
-        homeItemList = arrayListOf()
         homeAdapter.onItemClick = { component ->
             if (cartItems.contains(component)) {
                 openDialogBox("Item already added to cart")
@@ -49,7 +50,7 @@ class HomeFragment(private var homeItemList: ArrayList<Component>, private var c
                 openDialogBox()
             }
         }
-        homeAdapter.saveData(homeItemList)
+        fetchItems()
     }
 
     private fun openDialogBox(text:String? = null) {
@@ -67,5 +68,26 @@ class HomeFragment(private var homeItemList: ArrayList<Component>, private var c
             dialog.dismiss()
         }
         dialog.show()
+    }
+
+    private fun fetchItems(){
+        FirebaseFirestore.getInstance().collection("Components").get().addOnSuccessListener { result ->
+            for (doc in result) {
+                val component = Component(
+                    Id = doc.id,
+                    AvailableQuantity = doc.data["AvailableQuantity"].toString(),
+                    Image = doc.data["Image"].toString(),
+                    LastUpdated = doc.data["LastUpdated"].toString(),
+                    Model = doc.data["Model"].toString(),
+                    Name = doc.data["Name"].toString(),
+                    Price = doc.data["Price"].toString(),
+                    Quantity = doc.data["Quantity"].toString()
+                )
+                homeItemList.add(component)
+            }
+            homeAdapter.saveData(homeItemList)
+        }.addOnFailureListener { exception ->
+            Log.d("FireStore Error", exception.toString())
+        }
     }
 }
