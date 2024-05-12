@@ -36,6 +36,7 @@ class CartAdapter() : RecyclerView.Adapter<CartAdapter.CartViewHolder>() {
         val componentImage: ImageView = itemVew.findViewById(R.id.cart_item_image)
         val increment: ImageView = itemVew.findViewById(R.id.cart_increment)
         val decrement: ImageView = itemVew.findViewById(R.id.cart_decrement)
+        val delete: ImageView = itemVew.findViewById(R.id.deleteItem)
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CartAdapter.CartViewHolder {
         return CartAdapter.CartViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.cart_item, parent, false))
@@ -47,14 +48,25 @@ class CartAdapter() : RecyclerView.Adapter<CartAdapter.CartViewHolder>() {
         holder.componentName.text = cartItem.name
         Glide.with(holder.itemView.context).load(cartItem.image).into(holder.componentImage)
         holder.decrement.setOnClickListener{
+            onDeleteClick?.invoke(cartItem)
+        }
+        holder.decrement.setOnClickListener{
             holder.componentQuantity.text = (--cartItem.quantity).toString()
+            onDecrementClick?.invoke(cartItem)
         }
         holder.increment.setOnClickListener{
             holder.componentQuantity.text = (++cartItem.quantity).toString()
+            onIncrementClick?.invoke(cartItem)
         }
     }
 
     override fun getItemCount(): Int {
         return differ.currentList.size
     }
+
+    var onDeleteClick :((CartComponent) -> Unit)? = null
+
+    var onDecrementClick :((CartComponent) -> Unit)? = null
+
+    var onIncrementClick :((CartComponent) -> Unit)? = null
 }

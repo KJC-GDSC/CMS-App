@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Choco Crave</string>
+    <string name="app_name">CMS</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="prompt_email">Email</string>
     <string name="default_web_client_id" translatable="false">1094845932081-2ubg9fu8b6svqjavufli5p26vu9f7mpj.apps.googleusercontent.com</string>

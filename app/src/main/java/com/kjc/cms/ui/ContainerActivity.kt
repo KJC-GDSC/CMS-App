@@ -20,8 +20,11 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.gson.Gson
 import com.kjc.cms.R
 import com.kjc.cms.databinding.ActivityContainerBinding
+import com.kjc.cms.model.Component
+import com.kjc.cms.model.CurrentUser
 import com.kjc.cms.ui.fragments.home.AboutFragment
 import com.kjc.cms.ui.fragments.home.CartFragment
 import com.kjc.cms.ui.fragments.home.HistoryFragment
@@ -34,9 +37,13 @@ class ContainerActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
     private lateinit var firestore: FirebaseFirestore
     private lateinit var googleSignInClient: GoogleSignInClient
     private lateinit var acct: GoogleSignInAccount
+    private lateinit var user: CurrentUser
     private lateinit var sp: SharedPreferences
+    private lateinit var usp: SharedPreferences
     private lateinit var editor: Editor
-    private lateinit var cartItems: MutableSet<String>
+    private lateinit var ueditor: Editor
+    private lateinit var homeItemList : ArrayList<Component>
+    private lateinit var cartItems: ArrayList<Component>
 
     //TODO("complete calling of data here and save data in local storage")
 
@@ -44,18 +51,43 @@ class ContainerActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         super.onCreate(savedInstanceState)
         binding = ActivityContainerBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         setSupportActionBar(binding.toolbar)
+
+        //google sign in variables
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
             .build()
         googleSignInClient = GoogleSignIn.getClient(this, gso)
         acct = GoogleSignIn.getLastSignedInAccount(this)!!
+
+        //firestore connectivity and get list of items
         firestore = FirebaseFirestore.getInstance()
+        firestore.collection("Components").get().addOnSuccessListener { result ->
+            for (doc in result) {
+                val component = Component(
+                    Id = doc.id,
+                    AvailableQuantity = doc.data["AvailableQuantity"].toString(),
+                    Image = doc.data["Image"].toString(),
+                    LastUpdated = doc.data["LastUpdated"].toString(),
+                    Model = doc.data["Model"].toString(),
+                    Name = doc.data["Name"].toString(),
+                    Price = doc.data["Price"].toString(),
+                    Quantity = doc.data["Quantity"].toString()
+                )
+                homeItemList.add(component)
+            }
+        }.addOnFailureListener { exception ->
+            Log.d("FireStore Error", exception.toString())
+        }
+                // connect to local shared preference
         sp = getSharedPreferences("Cart", MODE_PRIVATE)
-        editor = sp.edit()
-        cartItems = sp.getStringSet("items", mutableSetOf())!!
+                editor = sp.edit()
+        ueditor = usp.edit()
+        user = Gson().fromJson(usp.getString("User", null), CurrentUser::class.java)
+        sp.getStringSet("items", mutableSetOf())?.forEach { item ->
+            cartItems.add(Gson().fromJson(item, Component::class.java))
+        }
         // fetch user credential information
 
         navigationView = findViewById<NavigationView>(R.id.nav_view);
@@ -71,7 +103,7 @@ class ContainerActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         toggle.syncState()
         if (savedInstanceState == null){
             //opens home page by default
-            Utils.fragMan(supportFragmentManager, HomeFragment(cartItems), binding.navView, R.id.nav_home)
+            Utils.fragMan(supportFragmentManager, HomeFragment(homeItemList, cartItems), binding.navView, R.id.nav_home)
         }
     }
 
@@ -79,15 +111,16 @@ class ContainerActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         // handle item selection and change fragments based ont the item selected
         when(item.itemId){
             R.id.nav_home ->
-                Utils.fragMan(supportFragmentManager, HomeFragment(cartItems), binding.navView, R.id.nav_home)
+                Utils.fragMan(supportFragmentManager, HomeFragment(homeItemList, cartItems), binding.navView, R.id.nav_home)
             R.id.nav_cart ->
                 Utils.fragMan(supportFragmentManager, CartFragment(sp, editor), binding.navView, R.id.nav_cart)
+            R.id.nav_history->
+                Utils.fragMan(supportFragmentManager, HistoryFragment(acct.email.toString()), binding.navView, R.id.nav_history)
             R.id.nav_about ->
                 Utils.fragMan(supportFragmentManager, AboutFragment(), binding.navView, R.id.nav_about)
-            R.id.nav_history->
-                Utils.fragMan(supportFragmentManager, HistoryFragment(), binding.navView, R.id.nav_history)
             R.id.nav_logout -> {
                 googleSignInClient.signOut().addOnCompleteListener {
+                    ueditor.clear().commit()
                     val intent= Intent(this, MainActivity::class.java)
                     startActivity(intent)
                     Toast.makeText(this, acct.displayName.toString()+" Logged Out", Toast.LENGTH_SHORT).show()

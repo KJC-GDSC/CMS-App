@@ -25,7 +25,6 @@ import com.kjc.cms.model.CartComponent
 import com.kjc.cms.model.Component
 import com.kjc.cms.utils.Utils
 
-
 class EachComponentFragment(private var data: Component, private var cartItems: MutableSet<String>? = mutableSetOf(), private var editor: Editor) : Fragment() {
 
     private lateinit var binding: FragmentEachComponentBinding
@@ -101,7 +100,7 @@ class EachComponentFragment(private var data: Component, private var cartItems: 
     }
 
     private fun handleAdd(data: Component, selectedQuantity:Int) {
-        val item = CartComponent(data.Name, data.Id, selectedQuantity, data.Image)
+        val item = CartComponent(data.Name, data.Id, selectedQuantity, data.Model.toString(), data.Image)
         val gson = Gson()
         cartItems?.add(gson.toJson(item))
         Log.d("cartItems", cartItems.toString())
