@@ -4,6 +4,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.content.SharedPreferences.Editor
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -17,7 +18,7 @@ import com.kjc.cms.ui.SecondaryActivity
 
 class CartFragment(private var sharedPreferences: SharedPreferences, private var editor: Editor) : Fragment() {
     private lateinit var binding: FragmentCartBinding
-    private lateinit var cartItemList: ArrayList<CartComponent>
+//    private lateinit var cartItemList: ArrayList<CartComponent>
     val arrayItem = arrayListOf<CartComponent>()
     private lateinit var cartAdapter: CartAdapter
     private val gson = Gson()
@@ -32,7 +33,6 @@ class CartFragment(private var sharedPreferences: SharedPreferences, private var
         binding.cartRecycler.layoutManager = LinearLayoutManager(context)
         cartAdapter = CartAdapter()
         binding.cartRecycler.adapter = cartAdapter
-        cartItemList = arrayListOf()
         val cartItems = fetchCartItems()
         binding.continueBooking.setOnClickListener{
             val intent = Intent(context, SecondaryActivity::class.java)
@@ -40,24 +40,36 @@ class CartFragment(private var sharedPreferences: SharedPreferences, private var
             startActivity(intent)
         }
         cartAdapter.onDeleteClick = { cartComponent ->
-            arrayItem.remove(cartComponent)
-            editor.putString("items", gson.toJson(arrayItem))
-            fetchCartItems()
+            val index = cartItems.indexOf(cartComponent)
+            cartItems.removeAt(index)
+            cartAdapter.notifyItemRemoved(index)
+            editor.putStringSet("items", arrayToSet(cartItems))
+            editor.commit()
         }
         cartAdapter.onDecrementClick = { cartComponent ->
             val index = cartItems.indexOf(cartComponent)
             cartComponent.quantity -= 1
             cartItems[index] = cartComponent
-            editor.putString("items", Gson().toJson(cartItems))
-            cartAdapter.saveData(cartItems)
+            editor.putStringSet("items", arrayToSet(cartItems))
+            editor.commit()
+            cartAdapter.notifyItemChanged(index)
         }
         cartAdapter.onIncrementClick = { cartComponent ->
             val index = cartItems.indexOf(cartComponent)
             cartComponent.quantity += 1
             cartItems[index] = cartComponent
-            editor.putString("items", Gson().toJson(cartItems))
-            cartAdapter.saveData(cartItems)
+            editor.putStringSet("items", arrayToSet(cartItems))
+            editor.commit()
+            cartAdapter.notifyItemChanged(index)
         }
+    }
+
+    private fun arrayToSet(cartItems: ArrayList<CartComponent>): MutableSet<String> {
+        val set = mutableSetOf<String>()
+        cartItems.forEach { item ->
+            set.add(Gson().toJson(item))
+        }
+        return set
     }
 
     private fun fetchCartItems(): ArrayList<CartComponent> {

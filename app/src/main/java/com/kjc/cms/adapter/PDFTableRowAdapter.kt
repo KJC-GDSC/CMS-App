@@ -1,6 +1,6 @@
 package com.kjc.cms.adapter
 
-import android.annotation.SuppressLint
+import android.util.Log
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.kjc.cms.R
@@ -10,16 +10,14 @@ import android.widget.TextView
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import com.kjc.cms.model.CartComponent
-import com.kjc.cms.model.Component
 
-class PDFTableRowAdapter(private var tableItem: ArrayList<CartComponent>) : RecyclerView.Adapter<PDFTableRowAdapter.PDFViewHolder>() {
+class PDFTableRowAdapter() : RecyclerView.Adapter<PDFTableRowAdapter.PDFViewHolder>() {
 
     private val differCallBack = object: DiffUtil.ItemCallback<CartComponent>() {
         override fun areItemsTheSame(oldItem: CartComponent, newItem: CartComponent): Boolean {
             return oldItem.id == newItem.id
         }
 
-        @SuppressLint("DiffUtilEquals")
         override fun areContentsTheSame(oldItem: CartComponent, newItem: CartComponent): Boolean {
             return oldItem == newItem
         }
@@ -27,7 +25,7 @@ class PDFTableRowAdapter(private var tableItem: ArrayList<CartComponent>) : Recy
 
     private val differ = AsyncListDiffer(this,differCallBack)
 
-    fun saveData(dataResponse: List<CartComponent>){
+    fun saveData(dataResponse: ArrayList<CartComponent>){
         differ.submitList(dataResponse)
     }
 
@@ -38,12 +36,13 @@ class PDFTableRowAdapter(private var tableItem: ArrayList<CartComponent>) : Recy
         val quantity: TextView = itemView.findViewById(R.id.rowItemQuantity)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PDFViewHolder {
-        return PDFViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.pdf_table_rows, parent, false))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PDFTableRowAdapter.PDFViewHolder {
+        return PDFTableRowAdapter.PDFViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.pdf_table_rows, parent, false))
     }
 
     override fun onBindViewHolder(holder: PDFTableRowAdapter.PDFViewHolder, position: Int) {
         val tableItem = differ.currentList[position]
+        Log.d("item", tableItem.id)
         holder.slNo.text = (position+1).toString()
         holder.name.text = tableItem.name
         holder.model.text = tableItem.model
@@ -51,6 +50,6 @@ class PDFTableRowAdapter(private var tableItem: ArrayList<CartComponent>) : Recy
     }
 
     override fun getItemCount(): Int {
-        return tableItem.size
+        return differ.currentList.size
     }
 }

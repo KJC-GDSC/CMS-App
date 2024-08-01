@@ -103,7 +103,6 @@ class EachComponentFragment(private var data: Component, private var cartItems: 
         val item = CartComponent(data.Name, data.Id, selectedQuantity, data.Model.toString(), data.Image)
         val gson = Gson()
         cartItems?.add(gson.toJson(item))
-        Log.d("cartItems", cartItems.toString())
         editor.putStringSet("items", cartItems)
         editor.apply()
     }

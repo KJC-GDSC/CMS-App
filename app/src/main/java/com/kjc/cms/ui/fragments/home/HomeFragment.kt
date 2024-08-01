@@ -19,10 +19,11 @@ import com.google.gson.Gson
 import com.kjc.cms.R
 import com.kjc.cms.adapter.HomeAdapter
 import com.kjc.cms.databinding.FragmentHomeBinding
+import com.kjc.cms.model.CartComponent
 import com.kjc.cms.model.Component
 import com.kjc.cms.ui.SecondaryActivity
 
-class HomeFragment(private var homeItemList: ArrayList<Component>, private var cartItems: ArrayList<Component>) : Fragment() {
+class HomeFragment(private var homeItemList: ArrayList<Component>, private var cartItems: ArrayList<CartComponent>) : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var homeAdapter: HomeAdapter
     private var homeRecycler : RecyclerView? = null
@@ -38,7 +39,13 @@ class HomeFragment(private var homeItemList: ArrayList<Component>, private var c
         homeAdapter = HomeAdapter()
         binding.homeGridRecycler.adapter = homeAdapter
         homeAdapter.onItemClick = { component ->
-            if (cartItems.contains(component)) {
+            var isPresent = false
+            cartItems.forEach { item ->
+                if (item.id == component.Id){
+                    isPresent = true
+                }
+            }
+            if (isPresent) {
                 openDialogBox("Item already added to cart")
             } else if (component.AvailableQuantity.toInt() > 0) {
                 //opens component details if it is available
