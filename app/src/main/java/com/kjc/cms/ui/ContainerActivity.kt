@@ -19,12 +19,11 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.navigation.NavigationView
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.gson.Gson
 import com.kjc.cms.R
 import com.kjc.cms.databinding.ActivityContainerBinding
+import com.kjc.cms.model.CartComponent
 import com.kjc.cms.model.Component
-import com.kjc.cms.model.CurrentUser
 import com.kjc.cms.ui.fragments.home.AboutFragment
 import com.kjc.cms.ui.fragments.home.CartFragment
 import com.kjc.cms.ui.fragments.home.HistoryFragment
@@ -41,7 +40,7 @@ class ContainerActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
     private lateinit var editor: Editor
     private lateinit var ueditor: Editor
     private var homeItemList : ArrayList<Component> = arrayListOf()
-    private var cartItems: ArrayList<Component> = arrayListOf()
+    private var cartItems: ArrayList<CartComponent> = arrayListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,7 +64,7 @@ class ContainerActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         usp = getSharedPreferences("User", MODE_PRIVATE)
         ueditor = usp.edit()
         sp.getStringSet("items", mutableSetOf())?.forEach { item ->
-            cartItems.add(Gson().fromJson(item, Component::class.java))
+            cartItems.add(Gson().fromJson(item, CartComponent::class.java))
         }
         // fetch user credential information
 

@@ -11,9 +11,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.kjc.cms.R
 import com.kjc.cms.model.CartComponent
-import com.kjc.cms.model.Component
 
 class CartAdapter() : RecyclerView.Adapter<CartAdapter.CartViewHolder>() {
+
     private val differCallBack = object: DiffUtil.ItemCallback<CartComponent>() {
         override fun areItemsTheSame(oldItem: CartComponent, newItem: CartComponent): Boolean {
             return oldItem.id == newItem.id
@@ -38,6 +38,7 @@ class CartAdapter() : RecyclerView.Adapter<CartAdapter.CartViewHolder>() {
         val decrement: ImageView = itemVew.findViewById(R.id.cart_decrement)
         val delete: ImageView = itemVew.findViewById(R.id.deleteItem)
     }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CartAdapter.CartViewHolder {
         return CartAdapter.CartViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.cart_item, parent, false))
     }
@@ -47,15 +48,15 @@ class CartAdapter() : RecyclerView.Adapter<CartAdapter.CartViewHolder>() {
         holder.componentQuantity.text = cartItem.quantity.toString()
         holder.componentName.text = cartItem.name
         Glide.with(holder.itemView.context).load(cartItem.image).into(holder.componentImage)
-        holder.decrement.setOnClickListener{
+        holder.delete.setOnClickListener{
             onDeleteClick?.invoke(cartItem)
         }
         holder.decrement.setOnClickListener{
-            holder.componentQuantity.text = (--cartItem.quantity).toString()
+//            holder.componentQuantity.text = (--cartItem.quantity).toString()
             onDecrementClick?.invoke(cartItem)
         }
         holder.increment.setOnClickListener{
-            holder.componentQuantity.text = (++cartItem.quantity).toString()
+//            holder.componentQuantity.text = (++cartItem.quantity).toString()
             onIncrementClick?.invoke(cartItem)
         }
     }

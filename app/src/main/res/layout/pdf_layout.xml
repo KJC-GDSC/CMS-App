@@ -3,25 +3,26 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="1550dp"
-    android:layout_height="1135dp">
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineHstart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="50dp" />
+        app:layout_constraintGuide_percent="0.03" />
 
     <ImageView
         android:id="@+id/imageView3"
-        android:layout_width="1000dp"
-        android:layout_height="200dp"
+        android:layout_width="match_parent"
+        android:layout_height="75.2dp"
         android:importantForAccessibility="no"
         app:layout_constraintBottom_toTopOf="@+id/guidelinestart"
         app:layout_constraintEnd_toStartOf="@+id/guidelineVend"
         app:layout_constraintStart_toStartOf="@+id/guidelineHstart"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/kjc_logo_black" />
 
     <androidx.constraintlayout.widget.Guideline
@@ -29,7 +30,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="220dp" />
+        app:layout_constraintGuide_percent="0.20194647" />
 
     <TextView
         android:id="@+id/textView4"
@@ -37,17 +38,18 @@
         android:layout_height="wrap_content"
         android:text="Name:"
         android:textColor="@color/black"
-        android:textSize="30sp"
+        android:textSize="15sp"
         app:layout_constraintStart_toStartOf="@+id/guidelineHstart"
         app:layout_constraintTop_toTopOf="@+id/guidelinestart" />
 
     <TextView
         android:id="@+id/personName"
-        android:layout_width="wrap_content"
+        android:layout_width="0sp"
         android:layout_height="wrap_content"
         android:text="data"
+        android:textSize="15sp"
+        android:gravity="center"
         android:textColor="@color/black"
-        android:textSize="30sp"
         app:layout_constraintEnd_toStartOf="@+id/guidelinemiddle"
         app:layout_constraintStart_toEndOf="@+id/textView4"
         app:layout_constraintTop_toTopOf="@+id/guidelinestart" />
@@ -58,17 +60,18 @@
         android:layout_height="wrap_content"
         android:text="Event Name:"
         android:textColor="@color/black"
-        android:textSize="30sp"
+        android:textSize="15sp"
         app:layout_constraintStart_toStartOf="@+id/guidelineHstart"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
     <TextView
         android:id="@+id/eventName"
-        android:layout_width="wrap_content"
+        android:layout_width="0sp"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:text="data"
         android:textColor="@color/black"
-        android:textSize="30sp"
+        android:textSize="15sp"
         app:layout_constraintEnd_toStartOf="@+id/guidelinemiddle"
         app:layout_constraintStart_toEndOf="@+id/textView5"
         app:layout_constraintTop_toTopOf="@+id/textView5" />
@@ -79,17 +82,18 @@
         android:layout_height="wrap_content"
         android:text="Department:"
         android:textColor="@color/black"
-        android:textSize="30sp"
+        android:textSize="15sp"
         app:layout_constraintStart_toStartOf="@+id/guidelineHstart"
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
     <TextView
         android:id="@+id/personDepartment"
-        android:layout_width="wrap_content"
+        android:layout_width="0sp"
+        android:gravity="center"
         android:layout_height="wrap_content"
         android:text="data"
         android:textColor="@color/black"
-        android:textSize="30sp"
+        android:textSize="15sp"
         app:layout_constraintEnd_toStartOf="@+id/guidelinemiddle"
         app:layout_constraintStart_toEndOf="@+id/textView7"
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
@@ -97,10 +101,9 @@
     <View
         android:id="@+id/view3"
         android:layout_width="match_parent"
-        android:layout_height="3dp"
-        android:background="@color/black"
+        android:layout_height="1dp"
+        android:background="#00000000"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/guidelineHend"
         app:layout_constraintStart_toStartOf="@+id/guidelineHstart" />
 
     <androidx.constraintlayout.widget.Guideline
@@ -108,7 +111,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="775dp" />
+        app:layout_constraintGuide_percent="0.5" />
 
     <TextView
         android:id="@+id/textView9"
@@ -116,20 +119,21 @@
         android:layout_height="wrap_content"
         android:text="Booking Date:"
         android:textColor="@color/black"
-        android:textSize="30sp"
+        android:textSize="15sp"
         app:layout_constraintStart_toStartOf="@+id/guidelinemiddle"
         app:layout_constraintTop_toTopOf="@+id/guidelinestart" />
 
     <TextView
         android:id="@+id/booking_Date"
-        android:layout_width="wrap_content"
+        android:layout_width="0sp"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:text="data"
         android:textColor="@color/black"
-        android:textSize="30sp"
+        android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="@+id/textView4"
         app:layout_constraintEnd_toStartOf="@+id/guidelineVend"
-        app:layout_constraintStart_toEndOf="@+id/textView6"
+        app:layout_constraintStart_toEndOf="@+id/textView9"
         app:layout_constraintTop_toTopOf="@+id/guidelinestart" />
 
     <TextView
@@ -138,18 +142,19 @@
         android:layout_height="wrap_content"
         android:text="Return Date:"
         android:textColor="@color/black"
-        android:textSize="30sp"
+        android:textSize="15sp"
         app:layout_constraintStart_toStartOf="@+id/guidelinemiddle"
         app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
     <TextView
         android:id="@+id/return_date"
-        android:layout_width="wrap_content"
+        android:layout_width="0sp"
+        android:gravity="center"
         android:layout_height="wrap_content"
         android:text="data"
         android:textColor="@color/black"
-        android:textSize="30sp"
         app:layout_constraintEnd_toStartOf="@+id/guidelineVend"
+        android:textSize="15sp"
         app:layout_constraintStart_toEndOf="@+id/textView6"
         app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
@@ -158,12 +163,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="340dp" />
+        app:layout_constraintGuide_percent="0.36" />
 
     <TableLayout
-        android:id="@+id/tableLayout"
+        android:id="@+id/pdfTable"
         android:layout_width="0dp"
-        android:layout_height="40dp"
+        android:layout_height="17dp"
         app:layout_constraintEnd_toStartOf="@+id/guidelineVend"
         app:layout_constraintStart_toStartOf="@+id/guidelineHstart"
         app:layout_constraintTop_toTopOf="@+id/guidelinehMid">
@@ -175,9 +180,10 @@
                 android:layout_height="wrap_content"
                 android:layout_column="0"
                 android:layout_weight="1"
-                android:text="Sl. No."
+                android:background="@drawable/cell_border"
+                android:text=" Sl. No."
                 android:textColor="@color/black"
-                android:textSize="30sp"
+                android:textSize="14sp"
                 app:layout_constraintEnd_toStartOf="@+id/guidelineHend"
                 app:layout_constraintStart_toEndOf="@+id/textView6"
                 app:layout_constraintTop_toBottomOf="@+id/textView10" />
@@ -187,10 +193,11 @@
                 android:layout_height="wrap_content"
                 android:layout_column="1"
                 android:layout_weight="20"
-                android:text="Name"
+                android:text=" Name"
                 android:textColor="@color/black"
-                android:textSize="30sp"
+                android:textSize="14sp"
                 app:layout_constraintEnd_toStartOf="@+id/guidelineHend"
+                android:background="@drawable/cell_border"
                 app:layout_constraintStart_toEndOf="@+id/textView6"
                 app:layout_constraintTop_toBottomOf="@+id/textView10" />
 
@@ -198,10 +205,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_column="2"
+                android:background="@drawable/cell_border"
                 android:layout_weight="3"
-                android:text="Model"
+                android:text=" Model"
                 android:textColor="@color/black"
-                android:textSize="30sp"
+                android:textSize="14sp"
                 app:layout_constraintEnd_toStartOf="@+id/guidelineHend"
                 app:layout_constraintStart_toEndOf="@+id/textView6"
                 app:layout_constraintTop_toBottomOf="@+id/textView10" />
@@ -210,10 +218,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_column="3"
+                android:background="@drawable/cell_border"
                 android:layout_weight="2"
-                android:text="Quantity"
+                android:text=" Quantity"
                 android:textColor="@color/black"
-                android:textSize="30sp"
+                android:textSize="14sp"
                 app:layout_constraintEnd_toStartOf="@+id/guidelineHend"
                 app:layout_constraintStart_toEndOf="@+id/textView6"
                 app:layout_constraintTop_toBottomOf="@+id/textView10" />
@@ -221,41 +230,55 @@
         </TableRow>
     </TableLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/table_recycler"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/guidelineHend"
-        app:layout_constraintEnd_toStartOf="@+id/guidelineVend"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/tableLayout"
-        app:layout_constraintTop_toBottomOf="@+id/tableLayout"
-        app:layout_constraintVertical_bias="0.0"
-        tools:listitem="@layout/pdf_table_rows">
+<!--        <androidx.recyclerview.widget.RecyclerView-->
+<!--        android:id="@+id/table_recycler"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="0dp"-->
+<!--        android:orientation="vertical"-->
+<!--        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/guidelineHend"-->
+<!--        app:layout_constraintEnd_toStartOf="@+id/guidelineVend"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/tableLayout"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/tableLayout"-->
+<!--        tools:listitem="@layout/pdf_table_rows" />-->
 
-    </androidx.recyclerview.widget.RecyclerView>
+<!--    <ListView-->
+<!--        android:id="@+id/table_recycler"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="0dp"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/guidelineHend"-->
+<!--        app:layout_constraintEnd_toStartOf="@+id/guidelineVend"-->
+<!--        app:layout_constraintHorizontal_bias="0.0"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/tableLayout"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/tableLayout"-->
+<!--        app:layout_constraintVertical_bias="0.0"-->
+<!--        tools:listitem="@layout/pdf_table_rows" />-->
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineHend"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="1000dp" />
+        app:layout_constraintGuide_percent="0.86" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/black"
-        android:textSize="30sp"
         android:text="Signature of the HOD"
+        android:textColor="@color/black"
+        android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/guidelineVend" />
+        app:layout_constraintEnd_toStartOf="@+id/guidelineVend"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/guidelineHstart"
+        app:layout_constraintTop_toTopOf="@+id/guidelineHend"
+        app:layout_constraintVertical_bias="0.8" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineVend"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="1500dp" />
+        app:layout_constraintGuide_percent="0.97" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
